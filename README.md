@@ -1,7 +1,7 @@
 # Sorting_Assignment
 
 ## Student Name
-[Your Name Here]
+Leon Shumil Kelrikh
 
 ## Selected Algorithms
 1. **Bubble Sort** (ID: 1) – O(n²) — repeatedly swaps adjacent out-of-order elements until the array is sorted.
