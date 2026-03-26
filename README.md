@@ -4,6 +4,7 @@
 Leon Shumil Kelrikh
 
 ## Selected Algorithms
+knowing all of those code are highly generic all three was written and only 1 3 and 4 used.
 1. **Bubble Sort** (ID: 1) – O(n²) — repeatedly swaps adjacent out-of-order elements until the array is sorted.
 2. **Selection Sort** (ID: 2) – O(n²) — finds the minimum element in the unsorted portion and places it at the front.
 3. **Insertion Sort** (ID: 3) – O(n²) average, O(n) best case — builds a sorted sub-array one element at a time by inserting each element into its correct position.
