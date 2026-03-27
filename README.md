@@ -60,7 +60,9 @@ For confirmation check etc/results_in_text.txt to see the written results.
 The plot clearly shows the difference between O(n²) and O(n log n) algorithms on random input:
 
 **Bubble Sort** is the slowest. It takes ~4.06s at n=10,000. Its runtime grows quadratically — going from n=1,000 (~0.033s) to n=10,000 (~4.06s) is roughly a 123× increase for a 10× increase in size, consistent with O(n²).
+
 **Insertion Sort** is also O(n²) but about 2.4× faster than Bubble Sort in practice (~1.69s at n=10,000 vs ~4.06s). It performs fewer comparisons and writes per pass, but still cannot scale to large inputs.
+
 **Merge Sort** is dramatically faster, following an O(n log n) growth curve. At n=10,000 it finishes in just ~0.019s — over 200× faster than Bubble Sort at the same size. Its runtime grows very gently even as array size increases.
 
 The shaded bands show one standard deviation across 20 repetitions. Merge Sort has a very tight band, indicating stable and predictable performance. Bubble Sort shows more variance at large sizes due to its sensitivity to element order.
@@ -76,7 +78,9 @@ The shaded bands show one standard deviation across 20 repetitions. Merge Sort h
 On nearly sorted arrays (only 5% of elements are randomly swapped), the runtimes changed noticeably for two of the three algorithms. Comparison is at n=3,000 since that is the largest size tested in Part C:
 
 **Insertion Sort** improves dramatically — from ~0.157s (random) to ~0.018s (nearly sorted) at n=3,000, roughly 8.5× faster. Because most elements are already close to their correct position, the inner while-loop runs very few iterations. This is Insertion Sort's adaptive behaviour: O(n·k) where k is the average displacement of each element.
+
 **Bubble Sort** also improves somewhat — from ~0.327s (random) to ~0.204s (nearly sorted) at n=3,000, about 1.6× faster. It still scans the full array in every pass even when very few swaps are needed, which limits how much it benefits from partial order.
+
 **Merge Sort** is essentially unchanged — ~0.004s in both experiments at n=3,000. It divides and merges every element regardless of input order, so partial sorting provides no benefit. Its O(n log n) runtime is consistent across all input types.
 
 **Key takeaway:** For nearly sorted data, Insertion Sort is the standout — its adaptive nature makes it competitive with Merge Sort at moderate sizes. Bubble Sort gains some benefit but not nearly as much. Merge Sort is input-agnostic and remains reliably fast regardless of how sorted the data is.
