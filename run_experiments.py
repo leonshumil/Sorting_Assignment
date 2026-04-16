@@ -79,29 +79,26 @@ def _quick_sort_inplace(a, low, high):
 
 
 def _median_of_five(a, low, high):
-    """Return index of the median among 5 evenly-spaced candidates."""
-    # Pick 5 candidate indices spread across [low, high]
     step = max(1, (high - low) // 4)
     candidates = [low, low + step, (low + high) // 2, high - step, high]
-    # Clamp to valid range
     candidates = [max(low, min(high, c)) for c in candidates]
-    # Insertion sort the 5 values to find the median (index 2)
-    idx = candidates[:]
+    
     for i in range(1, 5):
-        key_i = idx[i]
+        key_val = a[candidates[i]]
+        key_idx = candidates[i]
         j = i - 1
-        while j >= 0 and a[idx[j]] > a[key_i]:
-            idx[j + 1] = idx[j]
+        while j >= 0 and a[candidates[j]] > key_val:
+            candidates[j + 1] = candidates[j]
             j -= 1
-        idx[j + 1] = key_i
-    return idx[2]   # median index
+        candidates[j + 1] = key_idx
+    
+    return candidates[2]  
 
 
 def _partition(a, low, high):
-    # Median-of-five pivot – better pivot estimate → closer to O(n log n)
     if high - low >= 4:
         median_idx = _median_of_five(a, low, high)
-        a[median_idx], a[high] = a[high], a[median_idx]   # move pivot to end
+        a[median_idx], a[high] = a[high], a[median_idx]   
     pivot = a[high]
     i = low - 1
     for j in range(low, high):
@@ -122,7 +119,7 @@ ALGORITHMS = {
 }
 
 SLOW_ALGOS = {"Bubble Sort", "Selection Sort", "Insertion Sort"}
-SLOW_LIMIT  = 20_000   # skip O(n²) algos above this size
+SLOW_LIMIT  = 20_000   
 
 COLORS = {
     "Bubble Sort":    "#e74c3c",
