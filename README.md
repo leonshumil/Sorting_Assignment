@@ -84,6 +84,6 @@ On nearly sorted arrays (only 5% of elements are randomly swapped), the runtimes
 
 **Bubble Sort** also improves somewhat on nearly sorted input, but the gain is limited. It still scans the full array in every pass even when very few swaps are needed, which restricts how much it benefits from partial order.
 
-**Merge Sort** is essentially unchanged between the two panels. It divides and merges every element regardless of input order, so partial sorting provides no benefit. Its O(n log n) runtime is consistent across all input types.
+**Merge Sort** is essentially unchanged between the two panels. It divides and merges every element regardless of input order, so partial sorting provides no benefit. Its O(n log n) runtime is consistent across all input types. 
 
 **Key takeaway:** For nearly sorted data, Insertion Sort is the standout — its adaptive nature makes it competitive with Merge Sort at moderate sizes. Bubble Sort gains some benefit but not nearly as much. Merge Sort is input-agnostic and remains reliably fast regardless of how sorted the data is.
