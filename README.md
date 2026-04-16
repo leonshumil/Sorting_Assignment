@@ -1,7 +1,7 @@
 # Sorting_Assignment
 
-## Students Name
-Leon Shumil Kelrikh & Dvir solomon
+## Student Names
+Leon Shumil Kelrikh & Dvir Solomon
 
 ## Selected Algorithms
 All five algorithms were implemented. For the experiments, algorithms 1 (Bubble Sort), 3 (Insertion Sort), and 4 (Merge Sort) were selected.
@@ -78,7 +78,7 @@ The shaded bands show one standard deviation across repetitions. Merge Sort has 
 
 The plot above shows two side-by-side panels: random arrays (left) vs. nearly sorted arrays with 5% noise (right). This makes the difference in behaviour immediately visible across all three algorithms.
 
-On nearly sorted arrays (only 5% of elements are randomly swapped), the runtimes changed noticeably for two of the three algorithms. Comparison is at n=10,000:
+On nearly sorted arrays (only 5% of elements are randomly swapped), the runtimes changed noticeably for two of the three algorithms:
 
 **Insertion Sort** improves dramatically on nearly sorted input. Because most elements are already close to their correct position, the inner while-loop runs very few iterations. This is Insertion Sort's adaptive behaviour: its effective complexity becomes O(n·k) where k is the average displacement of each element — much better than O(n²) on random data.
 
