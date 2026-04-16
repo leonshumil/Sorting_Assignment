@@ -319,20 +319,17 @@ def main():
                      filename="result1.png")
 
     else:
-        # ── Part C – Nearly sorted arrays ───────
-        noise     = 0.05 if args.e == 1 else 0.20
-        noise_pct = int(noise * 100)
-        print(f"── Part C: Nearly Sorted (noise={noise_pct}%) ──")
+       noise = 0.05 if args.e == 1 else 0.20
+       noise_pct = int(noise * 100)
+       print(f"── Part C: Nearly Sorted (noise={noise_pct}%) ──")
 
-        print("  Running on random arrays for comparison...")
-        results_random = run_experiment(args.a, args.s, args.r, random_array)
+       print(f"  Running on nearly sorted arrays ({noise_pct}% noise)...")
+       results_sorted = run_experiment(args.a, args.s, args.r,
+                                    lambda n: nearly_sorted_array(n, noise))
 
-        print(f"  Running on nearly sorted arrays ({noise_pct}% noise)...")
-        results_sorted = run_experiment(args.a, args.s, args.r,
-                                        lambda n: nearly_sorted_array(n, noise))
-
-        plot_comparison(results_random, results_sorted, args.s, noise_pct,
-                        filename="result2.png")
+       plot_results(results_sorted, args.s,
+                 title=f"Runtime Comparison (Nearly Sorted, noise={noise_pct}%)",
+                 filename="result2.png")
 
     print("\nDone!")
 
