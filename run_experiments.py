@@ -82,7 +82,7 @@ def _median_of_five(a, low, high):
     step = max(1, (high - low) // 4)
     candidates = [low, low + step, (low + high) // 2, high - step, high]
     candidates = [max(low, min(high, c)) for c in candidates]
-    
+
     for i in range(1, 5):
         key_val = a[candidates[i]]
         key_idx = candidates[i]
@@ -91,14 +91,14 @@ def _median_of_five(a, low, high):
             candidates[j + 1] = candidates[j]
             j -= 1
         candidates[j + 1] = key_idx
-    
-    return candidates[2]  
+
+    return candidates[2]
 
 
 def _partition(a, low, high):
     if high - low >= 4:
         median_idx = _median_of_five(a, low, high)
-        a[median_idx], a[high] = a[high], a[median_idx]   
+        a[median_idx], a[high] = a[high], a[median_idx]
     pivot = a[high]
     i = low - 1
     for j in range(low, high):
@@ -119,7 +119,7 @@ ALGORITHMS = {
 }
 
 SLOW_ALGOS = {"Bubble Sort", "Selection Sort", "Insertion Sort"}
-SLOW_LIMIT  = 20_000   
+SLOW_LIMIT  = 20_000
 
 COLORS = {
     "Bubble Sort":    "#e74c3c",
@@ -182,30 +182,61 @@ def run_experiment(algo_ids, sizes, repetitions, array_gen):
 #  Plotting
 # ──────────────────────────────────────────────
 
-def plot_results(results, sizes, title, filename):
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.set_facecolor("#f8f9fa")
-    fig.patch.set_facecolor("white")
-    ax.grid(True, linestyle="--", alpha=0.5, color="#cccccc")
-
+def _draw_algo_lines(ax, results, sizes):
+    """Helper: draw lines + shaded std bands for one axes panel."""
     for name, size_data in results.items():
         color = COLORS.get(name, "gray")
         xs    = np.array(sizes, dtype=float)
         means = np.array([size_data.get(n, (float("nan"), float("nan")))[0] for n in sizes])
         stds  = np.array([size_data.get(n, (float("nan"), float("nan")))[1] for n in sizes])
-
-        mask = ~np.isnan(means)
+        mask  = ~np.isnan(means)
         ax.plot(xs[mask], means[mask], marker="o", label=name,
                 color=color, linewidth=2, markersize=5)
         ax.fill_between(xs[mask],
                         (means - stds)[mask],
                         (means + stds)[mask],
-                        alpha=0.15, color=color)
+                        alpha=0.2, color=color)
+
+
+def plot_results(results, sizes, title, filename):
+    """Single-panel plot used for Part B (random arrays)."""
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.set_facecolor("#f8f9fa")
+    fig.patch.set_facecolor("white")
+    ax.grid(True, linestyle="--", alpha=0.5, color="#cccccc")
+
+    _draw_algo_lines(ax, results, sizes)
 
     ax.set_xlabel("Array size (n)", fontsize=12)
     ax.set_ylabel("Runtime (seconds)", fontsize=12)
     ax.set_title(title, fontsize=14, fontweight="bold")
     ax.legend(fontsize=11)
+    plt.tight_layout()
+    plt.savefig(filename, dpi=150)
+    plt.close()
+    print(f"  Saved → {filename}")
+
+
+def plot_comparison(results_random, results_sorted, sizes, noise_pct, filename):
+    """Side-by-side panel plot used for Part C (random vs nearly sorted)."""
+    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+    panel_data = [
+        (axes[0], results_random, "Random Arrays"),
+        (axes[1], results_sorted, f"Nearly Sorted (noise={noise_pct}%)"),
+    ]
+
+    for ax, results, title in panel_data:
+        ax.set_facecolor("#f8f9fa")
+        ax.grid(True, linestyle="--", alpha=0.5, color="#cccccc")
+        _draw_algo_lines(ax, results, sizes)
+        ax.set_xlabel("Array size (n)", fontsize=12)
+        ax.set_ylabel("Runtime (seconds)", fontsize=12)
+        ax.set_title(title, fontsize=13, fontweight="bold")
+        ax.legend(fontsize=10)
+
+    fig.suptitle("Runtime Comparison: Random vs Nearly Sorted",
+                 fontsize=15, fontweight="bold")
     plt.tight_layout()
     plt.savefig(filename, dpi=150)
     plt.close()
@@ -290,13 +321,17 @@ def main():
         # ── Part C – Nearly sorted arrays ───────
         noise     = 0.05 if args.e == 1 else 0.20
         noise_pct = int(noise * 100)
-        label     = f"Nearly Sorted (noise={noise_pct}%)"
-        print(f"── Part C: {label} ──")
-        results = run_experiment(args.a, args.s, args.r,
-                                 lambda n: nearly_sorted_array(n, noise))
-        plot_results(results, args.s,
-                     title=f"Runtime Comparison ({label})",
-                     filename="result2.png")
+        print(f"── Part C: Nearly Sorted (noise={noise_pct}%) ──")
+
+        print("  Running on random arrays for comparison...")
+        results_random = run_experiment(args.a, args.s, args.r, random_array)
+
+        print(f"  Running on nearly sorted arrays ({noise_pct}% noise)...")
+        results_sorted = run_experiment(args.a, args.s, args.r,
+                                        lambda n: nearly_sorted_array(n, noise))
+
+        plot_comparison(results_random, results_sorted, args.s, noise_pct,
+                        filename="result2.png")
 
     print("\nDone!")
 
