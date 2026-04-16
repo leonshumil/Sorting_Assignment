@@ -1,8 +1,7 @@
 # Sorting_Assignment
 
-## Student Name
-Leon Shumil Kelrikh
-Dvir solomon
+## Students Name
+Leon Shumil Kelrikh & Dvir solomon
 
 ## Selected Algorithms
 All five algorithms were implemented. For the experiments, algorithms 1 (Bubble Sort), 3 (Insertion Sort), and 4 (Merge Sort) were selected.
@@ -24,7 +23,9 @@ pip3 install numpy matplotlib --break-system-packages
 
 ### CLI Usage (Part D)
 
+```bash
 python3 run_experiments.py -a <IDs> -s <sizes> -e <experiment> -r <repetitions>
+```
 
 | Flag | Description |
 |------|-------------|
