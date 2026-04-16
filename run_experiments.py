@@ -79,6 +79,7 @@ def _quick_sort_inplace(a, low, high):
 
 
 def _median_of_five(a, low, high):
+    """Return index of the median among 5 evenly-spaced candidates."""
     step = max(1, (high - low) // 4)
     candidates = [low, low + step, (low + high) // 2, high - step, high]
     candidates = [max(low, min(high, c)) for c in candidates]
@@ -183,7 +184,7 @@ def run_experiment(algo_ids, sizes, repetitions, array_gen):
 # ──────────────────────────────────────────────
 
 def _draw_algo_lines(ax, results, sizes):
-    """Helper: draw lines + shaded std bands for one axes panel."""
+    """Helper: draw lines + shaded std bands onto any axes panel."""
     for name, size_data in results.items():
         color = COLORS.get(name, "gray")
         xs    = np.array(sizes, dtype=float)
@@ -199,7 +200,7 @@ def _draw_algo_lines(ax, results, sizes):
 
 
 def plot_results(results, sizes, title, filename):
-    """Single-panel plot used for Part B (random arrays)."""
+    """Single-panel plot for Part B (random arrays)."""
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.set_facecolor("#f8f9fa")
     fig.patch.set_facecolor("white")
@@ -218,7 +219,7 @@ def plot_results(results, sizes, title, filename):
 
 
 def plot_comparison(results_random, results_sorted, sizes, noise_pct, filename):
-    """Side-by-side panel plot used for Part C (random vs nearly sorted)."""
+    """Side-by-side panel plot for Part C (random vs nearly sorted)."""
     fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
     panel_data = [
@@ -334,10 +335,6 @@ def main():
                         filename="result2.png")
 
     print("\nDone!")
-
-
-if __name__ == "__main__":
-    main()
 
 
 if __name__ == "__main__":
