@@ -119,6 +119,7 @@ ALGORITHMS = {
     5: ("Quick Sort",     quick_sort),
 }
 
+# We chose to limit some algos so we dont have extrems sorting times
 SLOW_ALGOS = {"Bubble Sort", "Selection Sort", "Insertion Sort"}
 SLOW_LIMIT  = 20_000
 
